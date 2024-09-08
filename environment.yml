@@ -1,4 +1,4 @@
-name: dezero
+name: dezero_kuro
 
 dependencies:
   - ipython
@@ -6,3 +6,4 @@ dependencies:
   - python
   - numpy
   - matplotlib
+  - japanize-matplotlib
