@@ -16,35 +16,38 @@ x_train = x_train[:500]
 t_train = t_train[:500]
 
 # 検証データの分離
-validation_rate = 0.20
-validation_num = int(x_train.shape[0] * validation_rate)
-x_train, t_train = shuffle_dataset(x_train, t_train)
+validation_rate = 0.20  # データ全体に対する、検証データの割合
+validation_num = int(x_train.shape[0] * validation_rate)  # 検証回数
+x_train, t_train = shuffle_dataset(x_train, t_train)  # データセットのシャッフル
+# 検証データ取り出し
 x_val = x_train[:validation_num]
 t_val = t_train[:validation_num]
+# 訓練データ取り出し
 x_train = x_train[validation_num:]
 t_train = t_train[validation_num:]
 
 
 def __train(lr, weight_decay, epocs=50):
+    """訓練を行う"""
     network = MultiLayerNet(
         input_size=784,
         hidden_size_list=[100, 100, 100, 100, 100, 100],
         output_size=10,
         weight_decay_lambda=weight_decay,
-    )
+    )  # 複数のニューラルネットワーク
     trainer = Trainer(
-        network,
-        x_train,
+        network,  # ネットワーク
+        x_train,  # 訓練データ
         t_train,
-        x_val,
+        x_val,  # 検証データ
         t_val,
         epochs=epocs,
         mini_batch_size=100,
-        optimizer="sgd",
-        optimizer_param={"lr": lr},
-        verbose=False,
+        optimizer="sgd",  # SGDアルゴリズムを使用する -> ここはほかのものにかえてもいいかも
+        optimizer_param={"lr": lr},  # パラメータに学習率を指定
+        verbose=False,  # 出力結果はそこまで詳しくなくても良いことにする
     )
-    trainer.train()
+    trainer.train()  # 学習開始
 
     return trainer.test_acc_list, trainer.train_acc_list
 
