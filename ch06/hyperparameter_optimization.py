@@ -62,6 +62,7 @@ for _ in range(optimization_trial):
     lr = 10 ** np.random.uniform(-6, -2)
     # ================================================
 
+    # 訓練データに対する精度と、検証データに対する精度を格納
     val_acc_list, train_acc_list = __train(lr, weight_decay)
     print(
         "val acc:"
